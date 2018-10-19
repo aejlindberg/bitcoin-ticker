@@ -1,4 +1,5 @@
 import React from "react"
+import { LineChart, Line, Tooltip, YAxis } from "recharts"
 import openGdaxWebsocket from "../gdax-websocket"
 
 class App extends React.Component {
@@ -24,15 +25,14 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        {this.state.tickerMessages.map(msg => (
-          <div key={msg.sequence}>
-            {msg.time}: <strong>{msg.price} EUR</strong>
-          </div>
-        ))}
+        <LineChart width={400} height={400} data={this.state.tickerMessages}>
+          <Tooltip />
+          <Line type="monotone" dataKey="price" stroke="#8884d8" />
+          <YAxis type="number" domain={['dataMin', 'dataMax']} />
+        </LineChart>
       </div>
     )
   }
-
 }
 
 export default App
